@@ -37,7 +37,7 @@ describe("Exchange", () => {
             await token.approve(exchange.address, toWei(200));
             await exchange.addLiquidity(toWei(200), { value: toWei(100) });
 
-            expect(await getBalance(exchange.address)).to.equal(toWei(100));
+            expect(await getbalance(exchange.address)).to.equal(toWei(100));
             expect(await exchange.getReserve()).to.equal(toWei(200));
         });
 
@@ -81,4 +81,11 @@ describe("Exchange", () => {
             expect(fromWei(ethOut)).to.equal("500.0");
         });
     });
-})
+
+    describe("LP reward", async () => {
+        await token.approve(exchange.address, toWei(200));
+        await exchange.addLiquidity(toWei(200), { value: toWei(100) });
+
+        await exchange.connect(user).ethToTokenSwap(toWei(18), { value: 10 })
+    });
+});
